@@ -260,7 +260,7 @@ export class ActionRowBuilder<T extends AnyComponentBuilder = AnyComponentBuilde
 }
 
 export type MessageActionRowComponent = ButtonComponent | SelectMenuComponent;
-export type ModalActionRowComponent = TextInputComponent;
+export type ModalActionRowComponent = TextInputComponent | SelectMenuComponent;
 
 export class ActionRow<T extends MessageActionRowComponent | ModalActionRowComponent> extends Component<
   APIActionRowComponent<APIMessageActionRowComponent | APIModalActionRowComponent>
@@ -1936,10 +1936,17 @@ export interface ModalComponentData {
   )[];
 }
 
+export interface SelectMenuModalData extends BaseModalData {
+  type: ComponentType.SelectMenu;
+  values: string[];
+}
+
 export interface BaseModalData {
   customId: string;
   type: ComponentType;
 }
+
+export type ModalData = ActionRowModalData | TextInputModalData | SelectMenuModalData;
 
 export interface TextInputModalData extends BaseModalData {
   type: ComponentType.TextInput;
@@ -1951,8 +1958,6 @@ export interface ActionRowModalData {
   components: ModalData[];
 }
 
-export type ModalData = TextInputModalData | ActionRowModalData;
-
 export class ModalSubmitFields {
   constructor(components: ModalActionRowComponent[][]);
   public components: ActionRow<ModalActionRowComponent>;
@@ -1960,6 +1965,7 @@ export class ModalSubmitFields {
   public getField<T extends ComponentType>(customId: string, type: T): { type: T } & ModalData;
   public getField(customId: string, type?: ComponentType): ModalData;
   public getTextInputValue(customId: string): string;
+  public getSelectMenuValues(customId: string): string[];
 }
 
 export interface ModalMessageModalSubmitInteraction<Cached extends CacheType = CacheType>

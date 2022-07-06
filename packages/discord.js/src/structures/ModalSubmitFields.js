@@ -50,6 +50,15 @@ class ModalSubmitFields {
   getTextInputValue(customId) {
     return this.getField(customId, ComponentType.TextInput).value;
   }
+
+  /**
+   * Gets the values of a select menu component given a custom id
+   * @param {string} customId The custom id for the select menu component
+   * @returns {string[]}
+   */
+  getSelectMenuValues(customId) {
+    return this.getField(customId, ComponentType.SelectMenu).values;
+  }
 }
 
 module.exports = ModalSubmitFields;
